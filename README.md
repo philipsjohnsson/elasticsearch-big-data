@@ -8,7 +8,7 @@ Elasticsearch and similar query engines allow developers to create indexes from 
 
 Find a bigger _dataset_ and visualize something that you find interesting from the dataset. The visualization should be presented in a publicly reachable web application in the form of a diagram.
 
-You can find datasets at https://www.kaggle.com/datasets, but you are free to explore and find something else.
+You can find datasets at https://www.kaggle.com/datasets, but you are free to explore and find something else. The dataset needs to be a minimum of 1000 datapoints.
 
 It is recommended that you develop in the following steps:
 
