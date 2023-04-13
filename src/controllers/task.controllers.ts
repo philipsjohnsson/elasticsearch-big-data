@@ -12,7 +12,7 @@ export class TaskController {
   @GET()
 getHelloTask(req: Request, res: Response) {
   console.log('TEST')
-  this.ITaskService.test()
+  // this.ITaskService.test()
 
   // return res.json({mssg: 'hello task'})
   res.render('index')

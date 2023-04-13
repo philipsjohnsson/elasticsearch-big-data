@@ -41,15 +41,29 @@ try {
   // Set up a morgan logger using the dev format for log entries.
   app.use(logger('dev'))
 
+  app.use(express.static(join(__dirname, '..', 'public')))
+
+  const baseURL = process.env.BASE_URL || '/'
+
   // const directoryFullName = dirname(fileURLToPath(__filename))
 
   // Parse requests of the content type application/json.
   app.use(express.json())
 
+  app.use(express.urlencoded({ extended: false }))
+
   app.set('view engine', 'ejs')
   app.set('views', path.join(__dirname, 'views'))
   app.use(expressLayouts)
   app.set('layout', join(__dirname, 'views', 'layouts', 'default'))
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+
+    res.locals.baseURL = baseURL
+
+    next()
+  })
+  // app.set('layout', 'layouts/layout')
 
   loadContainer(app)
 
