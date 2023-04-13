@@ -7,18 +7,29 @@
 
 // import { container } from './config/bootstrap.js'
 import express, { Express, NextFunction, Request, Response} from 'express'
+import { loadControllers } from "awilix-express"
+import { loadContainer } from "./container"
+import expressLayouts from 'express-ejs-layouts'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import helmet from 'helmet'
 import logger from 'morgan'
 import { Client } from '@elastic/elasticsearch'
+import path from 'path'
 // import { router } from './routes/router.js'
 
 try {
 
   const app: Express = express()
+
   /* const client = new Client({
     cloud: { id: 'elastic'},
     auth: { apiKey: 'vdRb+KuI9SWQgDNkKt7H'}
   })
+
+  
+
+  
 
   console.log(client) */
 
@@ -30,8 +41,22 @@ try {
   // Set up a morgan logger using the dev format for log entries.
   app.use(logger('dev'))
 
+  // const directoryFullName = dirname(fileURLToPath(__filename))
+
   // Parse requests of the content type application/json.
   app.use(express.json())
+
+  app.set('view engine', 'ejs')
+  app.set('views', path.join(__dirname, 'views'))
+  app.use(expressLayouts)
+  app.set('layout', join(__dirname, 'views', 'layouts', 'default'))
+
+  loadContainer(app)
+
+  app.use(loadControllers(
+  'controllers/*.ts',
+  { cwd: __dirname }
+  ))
 
   // app.enable('trust proxy')
 
@@ -84,7 +109,7 @@ try {
 
   // Starts the HTTP server listening for connections.
   app.listen(process.env.PORT, () => {
-    console.log(`Server running at http://localhost:${process.env.PORT}`)
+    console.log(`Server running at http://localhost:${process.env.PORT}`) // // https://stackoverflow.com/questions/70364944/how-can-i-make-the-cross-env-and-nodemon-work-together
     console.log('Press Ctrl-C to terminate...')
 
 

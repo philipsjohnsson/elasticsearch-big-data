@@ -8,8 +8,8 @@ console.log('TEST')
 const client = new Client({
   node: 'https://localhost:9200',
   auth: {
-    username: process.env.username,
-    password: process.env.password
+    username: 'elastic',
+    password: 'vdRb+KuI9SWQgDNkKt7H'
   },
   tls: {
     ca: fs.readFileSync('Q:/elasticsearch/elasticsearch-8.7.0/config/certs/http_ca.crt'),

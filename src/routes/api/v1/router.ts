@@ -1,6 +1,6 @@
 import express from 'express'
 // import createError from 'http-errors'
-import { router as homeRouter } from './homeRouter.js'
+import { router as homeRouter } from './homeRouter.ts'
 
 export const router = express.Router()
 
