@@ -40,38 +40,37 @@ export class ElasticsearchClient implements IElasticsearchClient {
 
   // Aggregation by category, how many of each category in a movie..
   async getMoviesBasedOnSpecificYear(req: Request, res: Response, next: NextFunction) {
-    console.log('TEST TEST GET MOVIES BASED ON SPECIFIC YEAR')
     const response = await this.#client.search({
       index: 'movieseriesdata',
-  body: {
-    size: 0,
-    aggs: {
-      movies_between_1990_and_2000: {
-        filter: {
-          bool: {
-            must: [
-              { match: { type: 'MOVIE' } },
-              { range: { release_year: { gte: 1990, lte: 2000 } } }
-            ]
-          }
-        },
+      body: {
+        size: 0,
         aggs: {
-          release_years: {
-            histogram: {
-              field: 'release_year',
-              interval: 1,
-              min_doc_count: 0
+          movies_between_1990_and_2000: {
+            filter: {
+              bool: {
+                must: [
+                  { match: { type: 'MOVIE' } },
+                  { range: { release_year: { gte: 1990, lte: 2000 } } }
+                ]
+              }
+            },
+            aggs: {
+              release_years: {
+                histogram: {
+                  field: 'release_year',
+                  interval: 1,
+                  min_doc_count: 0
+                }
+              }
             }
           }
         }
       }
-    }
-  }
-})
+    })
 
     console.log(response)
 
-    if(response.aggregations) {
+    if (response.aggregations) {
       const release_year = (response.aggregations.movies_between_1990_and_2000 as any).release_years
       const total_documents = (response.aggregations.movies_between_1990_and_2000 as any).doc_count
       console.log(release_year)

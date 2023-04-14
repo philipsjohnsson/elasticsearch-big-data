@@ -78,48 +78,33 @@ try {
   // app.use('/', router)
 
   // Error handler.
-  /* app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
-    if (err.status === 400) {
+  interface CustomError extends Error {
+    status?: number;
+  }
+  
+  app.use(function (err: CustomError, req: Request, res: Response, next: NextFunction) {
+      if (err.status === 404) {
       return res
-        .status(400)
-        .json({
-          status_code: 400,
-          message: 'The request cannot or will not be processed due to something that is perceived to be a client error (for example, validation error).'
-        })
-    } else if (err.status === 401) {
-      return res
-        .status(401)
-        .json({
-          status_code: 401,
-          message: 'Credentials invalid or not provided.'
-        })
-    } else if (err.status === 403) {
-      return res
-        .sendStatus(403)
-    } else if (err.status === 404) {
-      return res
-        .sendStatus(404)
-    } else if (err.status === 409) {
-      return res
-        .sendStatus(409)
+        .status(404)
+        .render('errors/404')
     } else if (err.status === 500) {
       return res
         .status(500)
         .json({
           status_code: 500,
           message: 'An unexpected condition was encountered.'
-        })
+        });
     }
-
+  
     if (req.app.get('env') !== 'development') {
       return res
-        .status(err.status)
+        .status(err.status || 500)
         .json({
-          status: err.status,
-          message: err.message
-        })
+          status: err.status || 500,
+          message: err.message || 'Internal Server Error'
+        });
     }
-  }) */
+  });
 
   // Starts the HTTP server listening for connections.
   app.listen(process.env.PORT, () => {
