@@ -17,7 +17,7 @@
       data: {
         labels: movies.release_year.buckets.map(year => year.key),
         datasets: [{
-          label: 'Total number of movies available on the platform for a specific year',
+          label: 'Movies available on the platform for a specific year',
           data: movies.release_year.buckets.map(count => count.doc_count),
           borderWidth: 1
         }]
