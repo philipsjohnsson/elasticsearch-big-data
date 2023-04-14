@@ -3,6 +3,7 @@ import fs from 'fs'
 import { IElasticsearchClient } from './IElasticsearchClient'
 import { Request, Response, NextFunction } from "express"
 import { AggregationsAggregate } from '@elastic/elasticsearch/lib/api/types'
+import { IAuth } from './IAuth'
 
 export class ElasticsearchClient implements IElasticsearchClient {
   #client
@@ -11,9 +12,9 @@ export class ElasticsearchClient implements IElasticsearchClient {
     this.#client = new Client({
       node: 'https://localhost:9200',
       auth: {
-        username: 'elastic',
-        password: 'vdRb+KuI9SWQgDNkKt7H'
-      },
+        username: process.env.user,
+        password: process.env.password
+      } as IAuth,
       tls: {
         ca: fs.readFileSync('Q:/elasticsearch/elasticsearch-8.7.0/config/certs/http_ca.crt'),
         rejectUnauthorized: false
