@@ -36,7 +36,7 @@ try {
   // app.set('container', container) // gör att vi kommer åt containern i router. we store container in container.
 
   // Set various HTTP headers to make the application little more secure (https://www.npmjs.com/package/helmet).
-  app.use(helmet())
+  // app.use(helmet())
 
   // Set up a morgan logger using the dev format for log entries.
   app.use(logger('dev'))

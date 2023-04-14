@@ -10,12 +10,14 @@ export class TaskController {
     this.TaskService = TaskService
   }
   @GET()
-getHelloTask(req: Request, res: Response, next: NextFunction) {
+async getHelloTask(req: Request, res: Response, next: NextFunction) {
   console.log('TEST')
-  this.TaskService.test(req, res, next)
+  // this.TaskService.test(req, res, next)
+  const viewData = await this.TaskService.getMoviesBasedOnSpecificYear(req, res, next)
 
   // return res.json({mssg: 'hello task'})
-  res.render('index')
+  res.render('index', { viewData })
   // res.render('index', { title: 'My Website' })
 }
+
 }

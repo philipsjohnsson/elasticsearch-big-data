@@ -1,3 +1,34 @@
-<div class="container">
-    TEST
+<h1>Assignment - WT2 - Big Data</h1>
+
+<h3>HBO movies</h3>
+
+<div style="width: 1000px; height: 500px;">
+    <canvas id="myChart"></canvas>
 </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script type="text/javascript">
+    const movies = JSON.parse('<%- JSON.stringify(viewData) %>')
+    const ctx = document.getElementById('myChart')
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: movies.release_year.buckets.map(year => year.key),
+        datasets: [{
+          label: 'Total number of movies available on the platform for a specific year',
+          data: movies.release_year.buckets.map(count => count.doc_count),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  

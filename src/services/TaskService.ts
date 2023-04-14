@@ -14,4 +14,8 @@ export class TaskService implements ITaskService {
     next()
     console.log('TESTTEST')
   }
+
+  async getMoviesBasedOnSpecificYear(req: Request, res: Response, next: NextFunction) {
+    return await this.ElasticsearchClient.getMoviesBasedOnSpecificYear(req, res, next)
+  }
 }
