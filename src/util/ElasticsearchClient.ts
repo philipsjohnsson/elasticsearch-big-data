@@ -4,6 +4,7 @@ import { IElasticsearchClient } from './IElasticsearchClient'
 import { Request, Response, NextFunction } from "express"
 import { AggregationsAggregate } from '@elastic/elasticsearch/lib/api/types'
 import { IAuth } from './IAuth'
+import { IMyBuckets } from '../types/IMyBuckets'
 
 export class ElasticsearchClient implements IElasticsearchClient {
   #client
@@ -23,11 +24,6 @@ export class ElasticsearchClient implements IElasticsearchClient {
 
   }
 
-  test() {
-    console.log('inside of elastic search client method')
-    console.log(this.#client)
-  }
-
   async getData(req: Request, res: Response, next: NextFunction) {
     const response = await this.#client.search({ index: 'movieseriesdata', body: { size: 30 } })
     console.log(response)
@@ -37,9 +33,6 @@ export class ElasticsearchClient implements IElasticsearchClient {
     })
   }
 
-  // Aggregation by year: This data includes a field called "release_year", which lists the year in which the movie was released. We could use aggregation to group movies by year and generate summary statistics, such as the total number of movies released each year, the average IMDB score for movies released each year, or the most popular years for movie releases based on TMDB popularity.
-
-  // Aggregation by category, how many of each category in a movie..
   async getMoviesBasedOnSpecificYear(req: Request, res: Response, next: NextFunction) {
     const response = await this.#client.search({
       index: 'movieseriesdata',
@@ -69,15 +62,9 @@ export class ElasticsearchClient implements IElasticsearchClient {
       }
     })
 
-    console.log(response)
-
     if (response.aggregations) {
-      const release_year = (response.aggregations.movies_between_1990_and_2000 as any).release_years
-      const total_documents = (response.aggregations.movies_between_1990_and_2000 as any).doc_count
-      console.log(release_year)
-      console.log(total_documents)
-      // console.log(response.aggregations.movies_between_1990_and_2000.release_years)
-      return { release_year, total_documents }
+      const release_year = (response.aggregations.movies_between_1990_and_2000 as IMyBuckets).release_years
+      return { release_year }
     }
   }
 }

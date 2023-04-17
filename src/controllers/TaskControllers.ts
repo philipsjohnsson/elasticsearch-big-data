@@ -24,7 +24,6 @@ async moviesBasedOnSpecificYear(req: Request, res: Response, next: NextFunction)
 @route('*')
 @GET()
 notFound(req: Request, res: Response, next: NextFunction) {
-  console.log('felhantering')
   next(createError(404))
 }
 }

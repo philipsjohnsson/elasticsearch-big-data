@@ -22,22 +22,18 @@ try {
 
   const app: Express = express()
 
-  /* const client = new Client({
-    cloud: { id: 'elastic'},
-    auth: { apiKey: 'vdRb+KuI9SWQgDNkKt7H'}
-  })
-
-  
-
-  
-
-  console.log(client) */
-
   // app.set('container', container) // gör att vi kommer åt containern i router. we store container in container.
 
   // Set various HTTP headers to make the application little more secure (https://www.npmjs.com/package/helmet).
-  // app.use(helmet())
+  app.use(helmet())
 
+  app.use(helmet.contentSecurityPolicy({
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      'script-src': ["'self'", "'unsafe-inline'" ,'cdn.jsdelivr.net'],
+      'style-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net']
+    }
+  }))
   // Set up a morgan logger using the dev format for log entries.
   app.use(logger('dev'))
 
@@ -90,10 +86,7 @@ try {
     } else if (err.status === 500) {
       return res
         .status(500)
-        .json({
-          status_code: 500,
-          message: 'An unexpected condition was encountered.'
-        });
+        .render('errors/500')
     }
   
     if (req.app.get('env') !== 'development') {
