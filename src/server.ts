@@ -16,7 +16,6 @@ import helmet from 'helmet'
 import logger from 'morgan'
 import { Client } from '@elastic/elasticsearch'
 import path from 'path'
-// import { router } from './routes/router.js'
 
 try {
 
