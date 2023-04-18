@@ -5,7 +5,6 @@
  * @version 1.0.0
  */
 
-// import { container } from './config/bootstrap.js'
 import express, { Express, NextFunction, Request, Response} from 'express'
 import { loadControllers } from "awilix-express"
 import { loadContainer } from "./container"
@@ -14,7 +13,6 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import helmet from 'helmet'
 import logger from 'morgan'
-import { Client } from '@elastic/elasticsearch'
 import path from 'path'
 
 try {
@@ -58,7 +56,6 @@ try {
 
     next()
   })
-  // app.set('layout', 'layouts/layout')
 
   loadContainer(app)
 
@@ -67,7 +64,6 @@ try {
   { cwd: __dirname }
   ))
 
-  // app.enable('trust proxy')
 
   // Register routes.
   // app.use('/', router)
@@ -100,7 +96,7 @@ try {
 
   // Starts the HTTP server listening for connections.
   app.listen(process.env.PORT, () => {
-    console.log(`Server running at http://localhost:${process.env.PORT}`) // // https://stackoverflow.com/questions/70364944/how-can-i-make-the-cross-env-and-nodemon-work-together
+    console.log(`Server running at http://localhost:${process.env.PORT}`)
     console.log('Press Ctrl-C to terminate...')
 
 

@@ -1,7 +1,6 @@
 import { GET, route } from "awilix-express"
 import { NextFunction, Request, Response } from "express"
 import { TaskService } from "../services/TaskService"
-import { ITaskService } from "../services/ITaskService"
 import createError from 'http-errors'
 
 

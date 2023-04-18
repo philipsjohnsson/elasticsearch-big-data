@@ -1,8 +1,0 @@
-{
-    "elastic": {
-      "cloudID": "DEPLOYMENT_NAME:CLOUD_ID_DETAILS", 
-      "username": "elastic",
-      "password": "LONGPASSWORD"
-    }
-  }
-  
