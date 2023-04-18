@@ -1,3 +1,10 @@
+/**
+ * The Taskservice of the application.
+ *
+ * @author Philip Jonsson
+ * @version 1.0.0
+ */
+
 import { ITaskService } from "./ITaskService"
 import { ElasticsearchClient } from "../util/ElasticsearchClient"
 import { Request, Response, NextFunction } from "express"

@@ -1,3 +1,10 @@
+/**
+ * The Taskcontroller of the application.
+ *
+ * @author Philip Jonsson
+ * @version 1.0.0
+ */
+
 import { GET, route } from "awilix-express"
 import { NextFunction, Request, Response } from "express"
 import { TaskService } from "../services/TaskService"

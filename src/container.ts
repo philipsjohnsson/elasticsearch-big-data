@@ -1,3 +1,10 @@
+/**
+ * Container of the application.
+ *
+ * @author Philip Jonsson
+ * @version 1.0.0
+ */
+
 import { asClass, createContainer } from "awilix"
 import { scopePerRequest } from "awilix-express"
 import { Application } from "express"

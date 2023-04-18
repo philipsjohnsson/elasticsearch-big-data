@@ -1,3 +1,10 @@
+/**
+ * Elasticsearch communication.
+ *
+ * @author Philip Jonsson
+ * @version 1.0.0
+ */
+
 import { Client } from '@elastic/elasticsearch'
 import { IElasticsearchClient } from './IElasticsearchClient'
 import { Request, Response, NextFunction } from "express"
@@ -14,16 +21,16 @@ export class ElasticsearchClient implements IElasticsearchClient {
 
   #connectToElastic() {
     try {
-    const client = new Client({
-      node: process.env.URL_ELASTIC,
-      auth: {
-        username: process.env.user,
-        password: process.env.password
-      } as IAuth
-    })
+      const client = new Client({
+        node: process.env.URL_ELASTIC,
+        auth: {
+          username: process.env.user,
+          password: process.env.password
+        } as IAuth
+      })
 
-    return client
-    } catch(err) {
+      return client
+    } catch (err) {
       throw createError(500)
     }
   }
@@ -31,7 +38,7 @@ export class ElasticsearchClient implements IElasticsearchClient {
   async getMoviesBasedOnSpecificYear(req: Request, res: Response, next: NextFunction) {
     try {
       let response = null
-      if(this.#client) {
+      if (this.#client) {
         response = await this.#client.search({
           index: 'movieseriesdata',
           body: {
@@ -60,13 +67,13 @@ export class ElasticsearchClient implements IElasticsearchClient {
           }
         })
       }
-        if (response && response.body.aggregations) {
-          const release_year = (response.body.aggregations.movies_between_1990_and_2000 as IMyBuckets).release_years
-          return { release_year }
-        } else {
-          throw createError(500)
-        }
-    } catch(err) {
+      if (response && response.body.aggregations) {
+        const release_year = (response.body.aggregations.movies_between_1990_and_2000 as IMyBuckets).release_years
+        return { release_year }
+      } else {
+        throw createError(500)
+      }
+    } catch (err) {
       next(createError(500))
     }
   }
