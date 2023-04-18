@@ -6,10 +6,7 @@ export class TaskService implements ITaskService {
   constructor(private ElasticsearchClient: ElasticsearchClient) {
     this.ElasticsearchClient = ElasticsearchClient
   }
-  test(req: Request, res: Response, next: NextFunction) {
-    this.ElasticsearchClient.getData(req, res, next)
-  }
-
+  
   async getMoviesBasedOnSpecificYear(req: Request, res: Response, next: NextFunction) {
     return await this.ElasticsearchClient.getMoviesBasedOnSpecificYear(req, res, next)
   }

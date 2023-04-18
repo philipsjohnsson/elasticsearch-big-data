@@ -1,5 +1,4 @@
 import { Client } from '@elastic/elasticsearch'
-import fs from 'fs'
 import { IElasticsearchClient } from './IElasticsearchClient'
 import { Request, Response, NextFunction } from "express"
 import { IAuth } from '../types/IAuth'
@@ -28,17 +27,10 @@ export class ElasticsearchClient implements IElasticsearchClient {
       throw createError(500)
     }
   }
-  
-  async getData(req: Request, res: Response, next: NextFunction) {
-    if(this.#client) {
-      const response = await this.#client.search({ index: 'movieseriesdata', body: { size: 30 } })
-      next()
-    }
-  }
 
   async getMoviesBasedOnSpecificYear(req: Request, res: Response, next: NextFunction) {
     try {
-      let response
+      let response = null
       if(this.#client) {
         response = await this.#client.search({
           index: 'movieseriesdata',

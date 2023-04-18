@@ -9,8 +9,7 @@ import express, { Express, NextFunction, Request, Response} from 'express'
 import { loadControllers } from "awilix-express"
 import { loadContainer } from "./container"
 import expressLayouts from 'express-ejs-layouts'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import helmet from 'helmet'
 import logger from 'morgan'
 import path from 'path'
@@ -73,7 +72,7 @@ try {
     status?: number;
   }
   
-  app.use(function (err: CustomError, req: Request, res: Response, next: NextFunction) {
+  app.use(function (err: CustomError, req: Request, res: Response) {
       if (err.status === 404) {
       return res
         .status(404)
